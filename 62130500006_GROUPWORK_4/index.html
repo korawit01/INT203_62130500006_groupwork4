@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+
+<body class="bg-blue-100">
+  <div id="app" class="">
+    <div id="head" class="flex items-center justify-center">
+      <h1 class="text-5xl font-mono">Photo Gallery ({{ countPic }})</h1>
+    </div>
+    <div id="head" class="flex items-center justify-center mt-5">
+      <button class="focus:outline-none" @click="openSearch">
+        <i class="material-icons" v-show="!searching">
+        search
+      </i>
+    </button>
+      <input v-show="searching" @keyup.enter="search" v-model="inputValue"
+      class="ml-2 p-1 w-80 placeholder-gray-500 placeholder-opacity-50 focus:outline-none text-black rounded-sm"
+      type="text" placeholder="Please enter text for searching photos">
+      <button v-show="searching" @click="cancelSearch" class="ml-2 p-1 rounded-sm focus:outline-none bg-blue-500">Cancel</button>
+    </div>
+
+    <div class="bg-black h-auto flex justify-between "  v-show="bigPic">
+      <div></div>
+      <img :src="bigSrc" class="bg-center ">
+      <button class="flex mb-auto focus:outline-none " @click="close">   
+      <i class="material-icons text-white " >
+        clear
+      </i>
+    </button>
+    </div>
+    <div id="content" class="grid grid-cols-4 gap-y-72 ">
+      
+      <ul class=" col-start-2 ">
+        <li v-for="(photo, index) in photos" v-show="photo.show" class="mt-10 h-72">
+          <img :src="photo.src" class="h-64 w-64" :alt="photos.title" @dblclick="toggleLike(index)" @click="expand(index)">
+          <button class="focus:outline-none ml-56">
+          <i xmlns="http://www.w3.org/2000/svg" v-show="!photo.favor"
+          class="material-icons icon icon-tabler icon-tabler-chevron-right"  width="24"
+          height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" @click="toggleLike(index)" >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <polyline points="9 6 15 12 9 18" />favorite
+      </i>
+    </button>
+      <button class="focus:outline-none">
+          <i xmlns="http://www.w3.org/2000/svg" v-show="photo.favor"
+          class="material-icons text-red-600 icon icon-tabler icon-tabler-chevron-right" width="24"
+          height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" @click="toggleLike(index)">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <polyline points="9 6 15 12 9 18" />favorite
+      </i>
+    </button>
+        </li>
+      </ul>
+      <ul class=" col-start-3">
+        <li v-for="(photo, index) in photos">
+          <p class="font-mono h-64 flex items-center mt-10 text-4xl  h-72">{{photo.title}}</p>
+                
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+</body>
+
+</html>
